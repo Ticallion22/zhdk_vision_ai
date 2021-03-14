@@ -1,4 +1,8 @@
+from flask import redirect, request
+
 from app import app
+from app.storage_client import RAW_BUCKET_NAME, StorageClient
+from app.vision_api import ImageAnnotator
 
 
 @app.route('/')
@@ -6,29 +10,21 @@ def index():
     return app.send_static_file('index.html')
 
 
-# @app.route('/file', methods=['GET', 'POST'])
-# def upload_file():
-#     if request.method == 'POST':
-#
-#         if 'image' not in request.files:
-#             flash('No image found in request')
-#             return redirect(request.url)
-#
-#         image = request.files['image']
-#
-#         if image.filename == '':
-#             flash('No file selected')
-#             return redirect(request.url)
-#
-#         if image:
-#             filename = secure_filename(image.filename)
-#             file_dir_path = Path(app.config['UPLOAD_FOLDER']) / datetime.now().strftime("%Y%m%d-%H%M%S")
-#             file_dir_path.mkdir()
-#             file_path = file_dir_path / filename
-#             image.save(file_path)
-#
-#             result = vision_api.annotate_image(file_path)
-#             with open(file_dir_path / 'results.txt', 'w') as image:
-#                 image.write(str(result))
-#
-#     return redirect(request.url)
+@app.route('/image', methods=['POST'])
+def upload_image():
+    image_annotator = ImageAnnotator()
+    storage_client = StorageClient()
+    data = request.json
+
+    if 'image' in data and data['image']:
+        image = data['image']
+        result = image_annotator.annotate_from_content(image)
+    elif 'image_url' in data and data['image_url']:
+        image_url = data['image_url']
+        result = image_annotator.annotate_from_url(image_url)
+    else:
+        return "No image or image URL provided", 400
+
+    storage_client.upload_blob(result, 'test', RAW_BUCKET_NAME, content_type='application/json')
+
+    return redirect(request.url)

@@ -1,8 +1,7 @@
 from flask import redirect, request
 
 from app import app
-from app.storage_client import RAW_BUCKET_NAME, StorageClient
-from app.vision_api import ImageAnnotator
+from app.image import Image
 
 
 @app.route('/')
@@ -11,20 +10,17 @@ def index():
 
 
 @app.route('/image', methods=['POST'])
-def upload_image():
-    image_annotator = ImageAnnotator()
-    storage_client = StorageClient()
-    data = request.json
+def route_image():
+    if request.method == 'GET':
+        pass
 
-    if 'image' in data and data['image']:
-        image = data['image']
-        result = image_annotator.annotate_from_content(image)
-    elif 'image_url' in data and data['image_url']:
-        image_url = data['image_url']
-        result = image_annotator.annotate_from_url(image_url)
-    else:
-        return "No image or image URL provided", 400
+    elif request.method == 'POST':
+        image_file = request.files.get('image', None)
 
-    storage_client.upload_blob(result, 'test', RAW_BUCKET_NAME, content_type='application/json')
+        if image_file:
+            image = Image(image_file)
+            image.post_image()
+            return redirect('/')
 
-    return redirect(request.url)
+        else:
+            return "Invalid file in request", 400

@@ -7,11 +7,10 @@ export default class App extends React.Component {
         super(props);
         this.state = {
             image: null,
-            image_url: ''
+            image_preview: null
         }
 
         this.setImage = this.setImage.bind(this)
-        this.setImageUrl = this.setImageUrl.bind(this)
         this.submit = this.submit.bind(this)
     }
 
@@ -24,21 +23,16 @@ export default class App extends React.Component {
         }
     }
 
-    setImageUrl(event) {
-        this.setState({
-            image_url: event.target.value
-        })
-    }
-
     submit(event) {
         event.preventDefault()
 
-        if (this.state.image && this.state.image_url) {
-            alert("Either provide image or URL, not both!")
-        } else if (this.state.image || this.state.image_url) {
-            let postData = {image: this.state.image, image_url: this.state.image_url};
-            axios.post('/image', postData)
-                .catch(err => alert('Failed saving image (' + err.statusText + ')'));
+        if (this.state.image) {
+            const data = new FormData();
+            const image = this.state.image;
+
+            data.append('image', image);
+            axios.post('/image', data, {headers: { 'content-type': image.type }})
+                // .catch(err => alert(err.response.status + ': ' + err.response.data));
         }
     }
 
@@ -47,11 +41,8 @@ export default class App extends React.Component {
             <div>
                 <form onSubmit={this.submit}>
                     <h1>Upload an image</h1>
-                    <img className="preview" src={this.state.image_preview} /><br/>
+                    <img alt="preview" className="preview" src={this.state.image_preview} /><br/>
                     <input type='file' onChange={this.setImage} />
-                    <h1>or insert a URL</h1>
-                    <input type='text' onChange={this.setImageUrl} value={this.state.image_url} />
-                    <br/>
                     <input type='submit' value='Upload'/>
                 </form>
             </div>

@@ -11,10 +11,7 @@ def index():
 
 @app.route('/image', methods=['POST'])
 def route_image():
-    if request.method == 'GET':
-        pass
-
-    elif request.method == 'POST':
+    if request.method == 'POST':
         image_file = request.files.get('image', None)
 
         if image_file:
@@ -22,7 +19,7 @@ def route_image():
             image.save_image()
             image.annotate_image()
             image.save_annotation()
-            return "Saved image with annotations", 201
+            return {'annotations': image.annotations}, 201
 
         else:
             return "Invalid file in request", 400

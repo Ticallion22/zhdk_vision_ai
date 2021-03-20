@@ -1,4 +1,4 @@
-from flask import redirect, request
+from flask import request
 
 from app import app
 from app.image import Image
@@ -19,8 +19,9 @@ def route_image():
 
         if image_file:
             image = Image(image_file)
-            image.post_image()
-            return redirect('/')
+            image.save_image()
+            image.annotate_image()
+            return "Saved image with annotations", 201
 
         else:
             return "Invalid file in request", 400

@@ -21,6 +21,7 @@ def route_image():
             image = Image(image_file)
             image.save_image()
             image.annotate_image()
+            image.save_annotation()
             return "Saved image with annotations", 201
 
         else:

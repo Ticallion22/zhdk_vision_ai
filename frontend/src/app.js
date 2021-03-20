@@ -32,7 +32,7 @@ export default class App extends React.Component {
 
             data.append('image', image);
             axios.post('/image', data, {headers: { 'content-type': image.type }})
-                // .catch(err => alert(err.response.status + ': ' + err.response.data));
+                .catch(err => alert(err.response.status + ': ' + err.response.data));
         }
     }
 

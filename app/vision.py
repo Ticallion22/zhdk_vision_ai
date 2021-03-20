@@ -43,13 +43,3 @@ class ImageAnnotator:
             'image': image,
             'features': VISION_FEATURES
         }
-
-
-if __name__ == '__main__':
-    annotator = ImageAnnotator()
-
-    with open(r"C:\Users\dsch\OneDrive\Bilder\_Titelbild.jpg", 'rb') as file:
-        content = file.read()
-        image = Image(content=content)
-        result = annotator.annotate_from_content(content)
-        print(result)

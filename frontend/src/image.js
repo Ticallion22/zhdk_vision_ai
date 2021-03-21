@@ -1,13 +1,11 @@
 import React from 'react';
 import {Cell, Grid, TabItem, TabPanel, Tabs, TabsContent} from 'react-foundation';
 import 'foundation-sites/dist/css/foundation.min.css';
-import {Label} from "./annotations/label";
 import {SafeSearch} from "./annotations/safe_search";
-import {LocalizedObject} from "./annotations/localized_object";
 import {Face} from "./annotations/face";
 import {Landmark} from "./annotations/landmark";
-import {Logo} from "./annotations/logo";
 import {Text} from "./annotations/text";
+import {PercentageAnnotation} from "./annotations/percentage";
 
 export class Image extends React.Component {
     constructor(props) {
@@ -54,16 +52,16 @@ export class Image extends React.Component {
                         </Tabs>
                         <TabsContent>
                             <TabPanel isActive={this.state.activeIndex === 1} id={"image-tabs-labels"}>
-                                <Label annotations={this.props.annotations}/>
+                                <PercentageAnnotation annotations={this.props.annotations} annotations_key={'labelAnnotations'} name_key={'description'}/>
                             </TabPanel>
                             <TabPanel isActive={this.state.activeIndex === 2} id={"image-tabs-objects"}>
-                                <LocalizedObject annotations={this.props.annotations}/>
+                                <PercentageAnnotation annotations={this.props.annotations} annotations_key={'localizedObjectAnnotations'} name_key={'name'}/>
                             </TabPanel>
                             <TabPanel isActive={this.state.activeIndex === 3} id={"image-tabs-faces"}>
                                 <Face annotations={this.props.annotations}/>
                             </TabPanel>
                             <TabPanel isActive={this.state.activeIndex === 4} id={"image-tabs-logos"}>
-                                <Logo annotations={this.props.annotations}/>
+                                <PercentageAnnotation annotations={this.props.annotations} annotations_key={'logoAnnotations'} name_key={'description'}/>
                             </TabPanel>
                             <TabPanel isActive={this.state.activeIndex === 5} id={"image-tabs-landmarks"}>
                                 <Landmark annotations={this.props.annotations}/>

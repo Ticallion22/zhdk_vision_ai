@@ -1,6 +1,8 @@
 import React from "react";
 import {Callout} from "react-foundation";
 
+// TODO languages
+
 export class Text extends React.Component {
     render() {
         if (this.props.annotations.hasOwnProperty('textAnnotations')) {

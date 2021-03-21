@@ -37,7 +37,6 @@ export class App extends React.Component {
                 .then(response => {
                     console.log(response)
                     this.getAllImages()
-                    this.onPageChange({selected: 1})
                 })
                 .catch(err => console.log(err))
         }

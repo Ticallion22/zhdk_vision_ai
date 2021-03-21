@@ -1,36 +1,23 @@
 import React from "react";
-import {BadgeColors as Colors} from "react-foundation/lib/enums";
-import {Progress} from "react-foundation";
-import {getLikelihoodPercentage, likelihoodEnum} from "./likelihood";
-import {capitalizeFirstLetter} from "../utils";
+import {Likelihood} from "./likelihood";
 
-export class SafeSearches extends React.Component {
+export class SafeSearch extends React.Component {
     render() {
         if (this.props.annotations.hasOwnProperty('safeSearchAnnotation')) {
-            const annotations = []
-            let likelihood;
+            const annotations = this.props.annotations.safeSearchAnnotation
+            const safe_searches = []
 
-            for (let key in this.props.annotations.safeSearchAnnotation) {
-                if (! key.endsWith('Confidence') && this.props.annotations.safeSearchAnnotation.hasOwnProperty(key)) {
-                    likelihood = this.props.annotations.safeSearchAnnotation[key]
-                    annotations.push(<SafeSearch key={"safe-search-" + key} description={key} likelihood={likelihood}/>)
+            for (let key in annotations) {
+                if (! key.endsWith('Confidence') && annotations.hasOwnProperty(key)) {
+                    safe_searches.push(
+                        <Likelihood key={"safe-search-" + key} description={key} likelihood={annotations[key]}/>
+                    )
                 }
             }
 
-            return annotations
+            return safe_searches
         } else {
             return "No safe search annotation data found"
         }
-    }
-}
-
-class SafeSearch extends React.Component {
-    render() {
-        return (
-            <div>
-                {capitalizeFirstLetter(this.props.description)}: {likelihoodEnum[this.props.likelihood]}
-                <Progress color={Colors.SUCCESS} value={getLikelihoodPercentage(this.props.likelihood)}/>
-            </div>
-        )
     }
 }

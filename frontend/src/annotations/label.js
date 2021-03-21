@@ -1,7 +1,7 @@
 import React from "react";
 import {Percentage} from "./percentage";
 
-export class Labels extends React.Component {
+export class Label extends React.Component {
     render() {
         if (this.props.annotations.hasOwnProperty('labelAnnotations')) {
             const annotations = this.props.annotations.labelAnnotations

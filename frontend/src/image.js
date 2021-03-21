@@ -2,9 +2,10 @@ import React from 'react';
 import './app.css';
 import {Cell, Grid, TabItem, TabPanel, Tabs, TabsContent} from 'react-foundation';
 import 'foundation-sites/dist/css/foundation.min.css';
-import {Labels} from "./annotations/label";
-import {SafeSearches} from "./annotations/safe_search";
-import {Objects} from "./annotations/object";
+import {Label} from "./annotations/label";
+import {SafeSearch} from "./annotations/safe_search";
+import {LocalizedObject} from "./annotations/localized_object";
+import {Face} from "./annotations/face";
 
 export class Image extends React.Component {
     constructor(props) {
@@ -47,13 +48,13 @@ export class Image extends React.Component {
                         </Tabs>
                         <TabsContent>
                             <TabPanel isActive={this.state.activeIndex === 1} id={"image-tabs-labels"}>
-                                <Labels annotations={this.props.annotations}/>
+                                <Label annotations={this.props.annotations}/>
                             </TabPanel>
                             <TabPanel isActive={this.state.activeIndex === 2} id={"image-tabs-objects"}>
-                                <Objects annotations={this.props.annotations}/>
+                                <LocalizedObject annotations={this.props.annotations}/>
                             </TabPanel>
                             <TabPanel isActive={this.state.activeIndex === 3} id={"image-tabs-faces"}>
-
+                                <Face annotations={this.props.annotations}/>
                             </TabPanel>
                             <TabPanel isActive={this.state.activeIndex === 4} id={"image-tabs-logos"}>
 
@@ -65,7 +66,7 @@ export class Image extends React.Component {
 
                             </TabPanel>
                             <TabPanel isActive={this.state.activeIndex === 7} id={"image-tabs-safesearch"}>
-                                <SafeSearches annotations={this.props.annotations}/>
+                                <SafeSearch annotations={this.props.annotations}/>
                             </TabPanel>
                         </TabsContent>
                     </div>

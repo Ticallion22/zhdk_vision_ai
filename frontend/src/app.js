@@ -30,10 +30,6 @@ export class App extends React.Component {
         this.upload_image = this.upload_image.bind(this)
     }
 
-    componentDidMount() {
-        this.getAllImages()
-    }
-
     deleteImage() {
         if (this.state.image_id) {
             axios.delete('/image', {params: {image_id: this.state.image_id}})
@@ -63,6 +59,7 @@ export class App extends React.Component {
             .then(response => {
                 console.log('user authenticated, displaying browsing stuff..')
                 this.setState({display_admin: 'block'})
+                this.getAllImages()
             })
     }
 

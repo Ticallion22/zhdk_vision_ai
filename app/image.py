@@ -1,4 +1,3 @@
-from datetime import datetime, timezone
 
 import shortuuid
 from google.cloud import vision_v1 as vision
@@ -6,7 +5,7 @@ from werkzeug.datastructures import FileStorage
 
 from app.storage import StorageClient
 
-IMAGE_RAW_PATH = 'image/{uuid}/{datetime}'
+IMAGE_RAW_PATH = 'image/{uuid}'
 VISION_AI_FEATURES = [
     {'type_': vision.Feature.Type.FACE_DETECTION},
     {'type_': vision.Feature.Type.LABEL_DETECTION},
@@ -18,9 +17,7 @@ VISION_AI_FEATURES = [
     {'type_': vision.Feature.Type.WEB_DETECTION}
 ]
 
-
-def get_current_utc_datetime_string():
-    return datetime.now(timezone.utc).strftime('%Y%m%d-%H%M%S')
+# TODO refactor to dataclass and DAO
 
 
 class Image:
@@ -36,12 +33,36 @@ class Image:
         content = image_file.read()
         content_type = image_file.content_type
         filename = image_file.filename
-        path = IMAGE_RAW_PATH.format(uuid=shortuuid.uuid(), datetime=get_current_utc_datetime_string())
+        path = IMAGE_RAW_PATH.format(uuid=shortuuid.uuid())
         return cls(content, content_type, filename, path)
+
+    @classmethod
+    def build_image_from_storage_client(cls, image_id, image_filename):
+        path = f'image/{image_id}'
+        annotations_path = f'image/{image_id}/annotations.json'
+        image_path = f'image/{image_id}/{image_filename}'
+
+        raw_storage_client = StorageClient.build_raw_storage_client()
+        image_bytes, image_content_type = raw_storage_client.download_blob_as_bytes(image_path)
+        annotations, _ = raw_storage_client.download_blob_as_text(annotations_path)
+
+        return cls(image_bytes, image_content_type, image_filename, path, annotations)
 
     @property
     def annotations(self):
         return self._annotations
+
+    @property
+    def content(self):
+        return self._content
+
+    @property
+    def content_type(self):
+        return self._content_type
+
+    @property
+    def filename(self):
+        return self._filename
 
     def annotate_image(self):
         image_annotator = ImageAnnotator()

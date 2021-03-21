@@ -6,7 +6,6 @@ export class Web extends React.Component {
         if (this.props.annotations.hasOwnProperty('webDetection')) {
             const annotations = this.props.annotations.webDetection
             const pages = []
-            let page
 
             if (annotations.hasOwnProperty('pagesWithMatchingImages')) {
                 for (let page in annotations.pagesWithMatchingImages) {
@@ -14,7 +13,7 @@ export class Web extends React.Component {
                         page = annotations.pagesWithMatchingImages[page]
                         if (page.hasOwnProperty('pageTitle') && page.hasOwnProperty('url')) {
                             pages.push(
-                                <Callout>
+                                <Callout key={'web-' + pages.length}>
                                     <p>{page.pageTitle}</p>
                                     <a href={page.url}>{page.url}</a>
                                 </Callout>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Cell, Grid, TabItem, TabPanel, Tabs, TabsContent} from 'react-foundation';
+import {Button, Cell, Grid, TabItem, TabPanel, Tabs, TabsContent} from 'react-foundation';
 import 'foundation-sites/dist/css/foundation.min.css';
 import {SafeSearch} from "./annotations/safe_search";
 import {Face} from "./annotations/face";
@@ -7,6 +7,7 @@ import {Landmark} from "./annotations/landmark";
 import {Text} from "./annotations/text";
 import {PercentageAnnotation} from "./annotations/percentage";
 import {Web} from "./annotations/web";
+import {BadgeColors as Colors} from "react-foundation/lib/enums";
 
 export class Image extends React.Component {
     constructor(props) {
@@ -22,10 +23,10 @@ export class Image extends React.Component {
             webEntities = (<PercentageAnnotation annotations={this.props.annotations.webDetection} annotations_key={'webEntities'} name_key={'description'}/>)
         }
 
-        console.log(this.props.annotations) // TODO remove
         return (
             <Grid className="display">
                 <Cell large={4}>
+                    <h3>{this.props.image_name}</h3><Button color={Colors.ALERT} onClick={this.props.deleteImage}>Delete</Button>
                     <img alt="Preview once uploaded" className="preview" src={this.props.preview} /><br/>
                 </Cell>
                 <Cell large={8}>

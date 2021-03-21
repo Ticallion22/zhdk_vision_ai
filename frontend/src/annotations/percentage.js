@@ -16,7 +16,7 @@ export class PercentageAnnotation extends React.Component {
                 name = annotations[i][this.props.name_key]
                 if (name) {
                     percentages.push(
-                        <Percentage key={"percentage-" + this.props.annotations_key + "-" + name}
+                        <Percentage key={"percentage-" + this.props.annotations_key + "-" + name + "-" + percentages.length}
                                     description={name}
                                     score={annotations[i].score}
                         />

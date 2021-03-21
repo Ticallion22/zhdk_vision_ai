@@ -29,19 +29,24 @@ class StorageClient:
         self._build_client()
 
         blob = Blob(blob_name, self._bucket)
-        return blob.download_as_bytes()
+        return blob.download_as_bytes(), blob.content_type
 
     def download_blob_as_text(self, blob_name: str):
         self._build_client()
 
         blob = Blob(blob_name, self._bucket)
-        return blob.download_as_text()
+        return blob.download_as_text(), blob.content_type
 
     def exists(self, blob_name: str) -> bool:
         self._build_client()
 
         blob = Blob(blob_name, self._bucket)
         return blob.exists()
+
+    def list_blobs(self, folder: str = ''):
+        self._build_client()
+
+        return self._bucket.list_blobs(prefix=folder)
 
     def upload_blob_from_content(self, blob_name: str, content: str, content_type: str = 'text/plan'):
         self._build_client()

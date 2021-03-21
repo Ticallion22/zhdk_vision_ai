@@ -7,6 +7,7 @@ import {SafeSearch} from "./annotations/safe_search";
 import {LocalizedObject} from "./annotations/localized_object";
 import {Face} from "./annotations/face";
 import {Landmark} from "./annotations/landmark";
+import {Logo} from "./annotations/logo";
 
 export class Image extends React.Component {
     constructor(props) {
@@ -62,7 +63,7 @@ export class Image extends React.Component {
                                 <Face annotations={this.props.annotations}/>
                             </TabPanel>
                             <TabPanel isActive={this.state.activeIndex === 4} id={"image-tabs-logos"}>
-
+                                <Logo annotations={this.props.annotations}/>
                             </TabPanel>
                             <TabPanel isActive={this.state.activeIndex === 5} id={"image-tabs-landmarks"}>
                                 <Landmark annotations={this.props.annotations}/>

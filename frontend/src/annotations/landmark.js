@@ -29,13 +29,11 @@ export class Landmark extends React.Component {
                     longitude = annotations[i].locations[0].latLng.longitude.toFixed(4)
                     details = latitude + String.fromCharCode(176) + " N, " + longitude + String.fromCharCode(176) + " E"
                     landmarks.push(
-                        <div>
-                            <Percentage key={"landmark-" + annotations[i].description}
-                                        description={annotations[i].description}
-                                        details={details}
-                                        score={annotations[i].score}
-                            />
-                        </div>
+                        <Percentage key={"landmark-" + annotations[i].description}
+                                    description={annotations[i].description}
+                                    details={details}
+                                    score={annotations[i].score}
+                        />
                     )
                 } else {
                     return "Invalid landmark annotation data found"

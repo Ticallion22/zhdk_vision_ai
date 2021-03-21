@@ -30,7 +30,9 @@ export class App extends React.Component {
         this.setImageFromUploaded = this.setImageFromUploaded.bind(this)
         this.upload_image = this.upload_image.bind(this)
     }
-
+    // TODO function for init state and always reset when necessary
+    // TODO upload button disabled if no image selected
+    // TODO images should have fixed order, after upload show the one uploaded, not just any
     deleteImage() {
         if (this.state.image_id) {
             axios.delete('/api/image', {params: {image_id: this.state.image_id}})
@@ -113,15 +115,14 @@ export class App extends React.Component {
         if (this.state.image) {
             const data = new FormData();
             data.append('image', this.state.image);
-
             axios.post('/api/image', data, {headers: { 'content-type': this.state.image.type }})
                 .then(response => response.data)
                 .then(data => {
-
                     axios.post('/api/annotation', {'image_id': data.image_id, 'filename': data.filename})
                         .then(response => response.data)
                         .then(data => {
                             this.setState({annotations: JSON.parse(data.annotation)})
+                            if (this.state.display_admin === 'block') this.getAllImages()
                         })
                         .catch(err => console.log(err));
 

@@ -7,10 +7,15 @@ export class Percentage extends React.Component {
         return Math.round(this.props.score * 100)
     }
     render() {
+        let details = ''
+        if (this.props.details) {
+            details = (<p>{this.props.details}</p>)
+        }
         return (
             <div>
-                {this.props.description} {this.get_percentage()}%
-                <Progress color={Colors.SUCCESS} value={this.get_percentage()}/>
+                <h5>{this.props.description}</h5>
+                {details}
+                <Progress color={Colors.SUCCESS} value={this.get_percentage()} meter={{ text: this.get_percentage() + '%'}}/>
             </div>
         )
     }

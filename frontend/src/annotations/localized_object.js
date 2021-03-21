@@ -23,14 +23,14 @@ export class LocalizedObject extends React.Component {
                     } else {
                         console.log("Invalid object annotation data found")
                         console.log(annotations)
-                        return "Invalid object annotation data found"
+                        return "Invalid localized object annotation data found"
                     }
                 }
             }
 
             return localized_objects
         } else {
-            return "No object annotation data found"
+            return "No localized object annotation data found"
         }
     }
 }

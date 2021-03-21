@@ -40,7 +40,7 @@ export class Face extends React.Component {
 
             return faces
         } else {
-            return "No safe search annotation data found"
+            return "No face annotation data found"
         }
     }
 }

@@ -6,6 +6,7 @@ import {Label} from "./annotations/label";
 import {SafeSearch} from "./annotations/safe_search";
 import {LocalizedObject} from "./annotations/localized_object";
 import {Face} from "./annotations/face";
+import {Landmark} from "./annotations/landmark";
 
 export class Image extends React.Component {
     constructor(props) {
@@ -16,6 +17,7 @@ export class Image extends React.Component {
 	}
 
     render() {
+        console.log(this.props.annotations) // TODO remove
         return (
             <Grid className="display">
                 <Cell large={4}>
@@ -40,9 +42,12 @@ export class Image extends React.Component {
                                 <a href={"#image-tabs-landmarks"}>Landmarks</a>
                             </TabItem>
                             <TabItem isActive={this.state.activeIndex === 6} onClick={(e) => {this.setState({activeIndex: 6})}}>
-                                <a href={"#image-tabs-text"}>Text</a>
+                                <a href={"#image-tabs-web"}>Web</a>
                             </TabItem>
                             <TabItem isActive={this.state.activeIndex === 7} onClick={(e) => {this.setState({activeIndex: 7})}}>
+                                <a href={"#image-tabs-text"}>Text</a>
+                            </TabItem>
+                            <TabItem isActive={this.state.activeIndex === 8} onClick={(e) => {this.setState({activeIndex: 8})}}>
                                 <a href={"#image-tabs-safesearch"}>Safe Search</a>
                             </TabItem>
                         </Tabs>
@@ -60,12 +65,15 @@ export class Image extends React.Component {
 
                             </TabPanel>
                             <TabPanel isActive={this.state.activeIndex === 5} id={"image-tabs-landmarks"}>
+                                <Landmark annotations={this.props.annotations}/>
+                            </TabPanel>
+                            <TabPanel isActive={this.state.activeIndex === 6} id={"image-tabs-web"}>
 
                             </TabPanel>
-                            <TabPanel isActive={this.state.activeIndex === 6} id={"image-tabs-text"}>
+                            <TabPanel isActive={this.state.activeIndex === 7} id={"image-tabs-text"}>
 
                             </TabPanel>
-                            <TabPanel isActive={this.state.activeIndex === 7} id={"image-tabs-safesearch"}>
+                            <TabPanel isActive={this.state.activeIndex === 8} id={"image-tabs-safesearch"}>
                                 <SafeSearch annotations={this.props.annotations}/>
                             </TabPanel>
                         </TabsContent>

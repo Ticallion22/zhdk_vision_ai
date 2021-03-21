@@ -10,3 +10,4 @@ class HttpConfig(BaseConfig):
 class MainConfig(BaseConfig):
     flask_secret_key: str = Secret('ZHDK_VISION_SECRET_KEY')
     http: HttpConfig
+    gcs_raw_bucket: str = Secret('ZHDK_VISION_GCS_RAW_BUCKET')

@@ -15,9 +15,13 @@ export class SafeSearch extends React.Component {
                 }
             }
 
-            return safe_searches
+            if (safe_searches.length !== 0) {
+                return safe_searches
+            } else {
+                return "No safe search annotation data found"
+            }
         } else {
-            return "No safe search annotation data found"
+            return null
         }
     }
 }

@@ -22,7 +22,7 @@ export class Face extends React.Component {
                                 capitalizeFirstLetter(key.replace('Likelihood', ''))
                             )
                             face_properties.push(
-                                <Likelihood key={"face-" + display_name}
+                                <Likelihood key={"face-" + key + "-" + i}
                                             description={display_name}
                                             likelihood={annotations[i][key]}
                                 />
@@ -30,7 +30,7 @@ export class Face extends React.Component {
                         }
                     }
                     faces.push(
-                        <div>
+                        <div key={"face-div-" + i}>
                             <h5>Face {parseInt(i)+1}</h5>
                             {face_properties}
                         </div>
@@ -38,9 +38,13 @@ export class Face extends React.Component {
                 }
             }
 
-            return faces
+            if (faces.length !== 0) {
+                return faces
+            } else {
+                return "No face annotation data found"
+            }
         } else {
-            return "No face annotation data found"
+            return null
         }
     }
 }

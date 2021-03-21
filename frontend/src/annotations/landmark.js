@@ -42,9 +42,13 @@ export class Landmark extends React.Component {
                 }
             }
 
-            return landmarks
+            if (landmarks.length !== 0) {
+                return landmarks
+            } else {
+                return "No landmark annotation data found"
+            }
         } else {
-            return "No landmark annotation data found"
+            return null
         }
     }
 }

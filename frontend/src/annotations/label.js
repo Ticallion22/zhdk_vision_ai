@@ -16,7 +16,7 @@ export class Label extends React.Component {
                                 key={"label-annotation-" + annotations[i].description}
                                 description={annotations[i].description}
                                 score={annotations[i].score}/>
-                            )
+                        )
 
                     } else {
                         console.log(annotations[i])
@@ -25,9 +25,14 @@ export class Label extends React.Component {
                 }
             }
 
-            return labels
+            if (labels.length !== 0) {
+                return labels
+            } else {
+                return "No label annotation data found"
+            }
+
         } else {
-            return "No label annotation data found"
+            return null
         }
     }
 }

@@ -14,7 +14,7 @@ export class LocalizedObject extends React.Component {
 
                     if (annotations[i].hasOwnProperty('name') && annotations[i].hasOwnProperty('score')) {
                         localized_objects.push(
-                            <Percentage key={"label-annotation-" + annotations[i].name}
+                            <Percentage key={"label-annotation-" + annotations[i].name + "-" + i}
                                         description={annotations[i].name}
                                         score={annotations[i].score}
                             />
@@ -28,9 +28,13 @@ export class LocalizedObject extends React.Component {
                 }
             }
 
-            return localized_objects
+            if (localized_objects.length !== 0) {
+                return localized_objects
+            } else {
+                return "No localized objects annotation data found"
+            }
         } else {
-            return "No localized object annotation data found"
+            return null
         }
     }
 }

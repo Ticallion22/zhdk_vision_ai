@@ -1,11 +1,10 @@
 
 import shortuuid
 from google.cloud import vision_v1 as vision
-from werkzeug.datastructures import FileStorage
 
 from app.storage import StorageClient
 
-IMAGE_RAW_PATH = 'image/{uuid}'
+IMAGE_RAW_PATH = 'image/{image_id}'
 VISION_AI_FEATURES = [
     {'type_': vision.Feature.Type.FACE_DETECTION},
     {'type_': vision.Feature.Type.LABEL_DETECTION},
@@ -17,40 +16,55 @@ VISION_AI_FEATURES = [
     {'type_': vision.Feature.Type.WEB_DETECTION}
 ]
 
-# TODO refactor to dataclass and DAO
+
+class Annotation:
+    def __init__(self, json, image_id):
+        self._json = json
+        self._image_id = image_id
+        self._path = f'{IMAGE_RAW_PATH.format(image_id=image_id)}/annotations.json'
+
+    @classmethod
+    def get_annotation_from_storage_client(cls, image_id):
+        annotations_path = f'{IMAGE_RAW_PATH.format(image_id=image_id)}/annotations.json'
+
+        raw_storage_client = StorageClient.build_raw_storage_client()
+        json, _ = raw_storage_client.download_blob_as_text(annotations_path)
+
+        return cls(json, image_id)
+
+    @property
+    def json(self):
+        return self._json
+
+    def save_annotation(self):
+        raw_storage_client = StorageClient.build_raw_storage_client()
+        raw_storage_client.upload_blob_from_content(self._path, self._json, content_type='application/json')
 
 
 class Image:
-    def __init__(self, content, content_type, filename, path, annotations=''):
-        self._annotations = annotations
+    def __init__(self, content, content_type, filename, image_id=''):
         self._content = content
         self._content_type = content_type
         self._filename = filename
-        self._path = path
+        self._image_id = image_id if image_id else shortuuid.uuid()
+        self._path = f'{IMAGE_RAW_PATH.format(image_id=self._image_id)}/{self._filename}'
 
     @classmethod
-    def build_image_from_file_storage(cls, image_file: FileStorage):
-        content = image_file.read()
-        content_type = image_file.content_type
-        filename = image_file.filename
-        path = IMAGE_RAW_PATH.format(uuid=shortuuid.uuid())
-        return cls(content, content_type, filename, path)
-
-    @classmethod
-    def build_image_from_storage_client(cls, image_id, image_filename):
-        path = f'image/{image_id}'
-        annotations_path = f'image/{image_id}/annotations.json'
-        image_path = f'image/{image_id}/{image_filename}'
+    def get_image_from_storage_client(cls, image_id, image_filename):
+        image_path = f'{IMAGE_RAW_PATH.format(image_id=image_id)}/{image_filename}'
 
         raw_storage_client = StorageClient.build_raw_storage_client()
         image_bytes, image_content_type = raw_storage_client.download_blob_as_bytes(image_path)
-        annotations, _ = raw_storage_client.download_blob_as_text(annotations_path)
 
-        return cls(image_bytes, image_content_type, image_filename, path, annotations)
+        return cls(image_bytes, image_content_type, image_filename, image_id)
 
-    @property
-    def annotations(self):
-        return self._annotations
+    @staticmethod
+    def delete_image(image_id):
+        raw_storage_client = StorageClient.build_raw_storage_client()
+        blobs = raw_storage_client.list_blobs(IMAGE_RAW_PATH.format(image_id=image_id))
+
+        for blob in blobs:
+            raw_storage_client.delete_blob(blob.name)
 
     @property
     def content(self):
@@ -64,19 +78,13 @@ class Image:
     def filename(self):
         return self._filename
 
-    def annotate_image(self):
-        image_annotator = ImageAnnotator()
-        self._annotations = image_annotator.annotate_from_content(self._content)
-
-    def save_annotation(self):
-        raw_storage_client = StorageClient.build_raw_storage_client()
-        annotations_path = f'{self._path}/annotations.json'
-        raw_storage_client.upload_blob_from_content(annotations_path, self._annotations, content_type='application/json')
+    @property
+    def image_id(self):
+        return self._image_id
 
     def save_image(self):
         raw_storage_client = StorageClient.build_raw_storage_client()
-        image_path = f'{self._path}/{self._filename}'
-        raw_storage_client.upload_blob_from_content(image_path, self._content, content_type=self._content_type)
+        raw_storage_client.upload_blob_from_content(self._path, self._content, content_type=self._content_type)
 
 
 class ImageAnnotator:
@@ -91,7 +99,7 @@ class ImageAnnotator:
         image = vision.Image(source={'image_uri': url})
         return self._annotate(image)
 
-    def _annotate(self, image: Image) -> str:
+    def _annotate(self, image: vision.Image) -> str:
         self._build_client()
         request = self._build_annotator_request(image)
         response = self._annotator_client.annotate_image(request)
@@ -101,7 +109,7 @@ class ImageAnnotator:
         if self._annotator_client is None:
             self._annotator_client = vision.ImageAnnotatorClient()
 
-    def _build_annotator_request(self, image: Image) -> dict:
+    def _build_annotator_request(self, image: vision.Image) -> dict:
         return {
             'image': image,
             'features': VISION_AI_FEATURES

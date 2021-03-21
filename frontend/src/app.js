@@ -2,9 +2,10 @@ import axios from 'axios';
 import React from 'react';
 import {Image} from './image';
 import './app.css';
-import {Cell, Grid} from "react-foundation";
+import {Button, Cell, Grid} from "react-foundation";
 import 'foundation-sites/dist/css/foundation.min.css';
 import ReactPaginate from 'react-paginate';
+import {BadgeColors as Colors} from "react-foundation/lib/enums";
 
 export class App extends React.Component {
     constructor(props) {
@@ -23,7 +24,7 @@ export class App extends React.Component {
         this.onPageChange = this.onPageChange.bind(this)
         this.setImageFromStorage = this.setImageFromStorage.bind(this)
         this.setImageFromUploaded = this.setImageFromUploaded.bind(this)
-        this.submit = this.submit.bind(this)
+        this.upload_image = this.upload_image.bind(this)
     }
 
     componentDidMount() {
@@ -77,6 +78,10 @@ export class App extends React.Component {
                     image_id: image_id
                 })
             })
+
+        axios.get('/annotation', {params: {image_id: image_id}})
+            .then(response => response.data)
+            .then(data => this.setState({annotations: JSON.parse(data.annotation)}))
     }
 
     setImageFromUploaded(event) {
@@ -90,21 +95,25 @@ export class App extends React.Component {
         }
     }
 
-    submit(event) {
-        event.preventDefault()
-
+    upload_image() {
         if (this.state.image) {
             const data = new FormData();
-            const image = this.state.image;
+            data.append('image', this.state.image);
 
-            data.append('image', image);
-            axios.post('/image', data, {headers: { 'content-type': image.type }})
+            axios.post('/image', data, {headers: { 'content-type': this.state.image.type }})
                 .then(response => response.data)
                 .then(data => {
-                    this.setState({annotations: JSON.parse(data.annotations)})
-                    this.getAllImages()
+
+                    axios.post('/annotation', {'image_id': data.image_id, 'filename': data.filename})
+                        .then(response => response.data)
+                        .then(data => {
+                            this.setState({annotations: JSON.parse(data.annotation)})
+                            this.getAllImages() // TODO improve
+                        })
+                        .catch(err => console.log(err));
+
                 })
-                .catch(err => alert(err.response.status + ': ' + err.response.data));
+                .catch(err => console.log(err));
         }
     }
 
@@ -129,11 +138,9 @@ export class App extends React.Component {
                 </Cell>
 
                 <Cell>
-                    <form onSubmit={this.submit}>
-                        <h1>Choose an image</h1>
-                        <input type='file' onChange={this.setImageFromUploaded} />
-                        <input type='submit' value='Annotate'/>
-                    </form>
+                    <h1>Choose an image</h1>
+                    <input type='file' onChange={this.setImageFromUploaded} />
+                    <Button color={Colors.PRIMARY} onClick={this.upload_image}>Upload</Button>
                 </Cell>
             </Grid>
         )

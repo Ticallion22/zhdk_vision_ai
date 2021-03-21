@@ -134,3 +134,8 @@ dmypy.json
 ### PyCharm
 
 .idea/*
+
+
+### Static (don't check in, build frontend for deployment)
+
+static/*

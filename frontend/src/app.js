@@ -32,7 +32,7 @@ export class App extends React.Component {
 
     deleteImage() {
         if (this.state.image_id) {
-            axios.delete('/image', {params: {image_id: this.state.image_id}})
+            axios.delete('/api/image', {params: {image_id: this.state.image_id}})
                 .then(response => {
                     console.log(response)
                     this.getAllImages()
@@ -42,7 +42,7 @@ export class App extends React.Component {
     }
 
     getAllImages() {
-        axios.get('/images')
+        axios.get('/api/images')
             .then(response => response.data)
             .then(data => {this.setState({
                 all_images: data.images
@@ -55,7 +55,7 @@ export class App extends React.Component {
     }
 
     login() {
-        axios.get('/login')
+        axios.get('/api/login')
             .then(response => {
                 console.log('user authenticated, displaying browsing stuff..')
                 this.setState({display_admin: 'block'})
@@ -76,7 +76,7 @@ export class App extends React.Component {
     }
 
     setImageFromStorage(image_id, image_filename) {
-        axios.get('/image', {
+        axios.get('/api/image', {
             params: {image_id: image_id, image_filename: image_filename},
             responseType: 'blob'
         })
@@ -90,7 +90,7 @@ export class App extends React.Component {
                 })
             })
 
-        axios.get('/annotation', {params: {image_id: image_id}})
+        axios.get('/api/annotation', {params: {image_id: image_id}})
             .then(response => response.data)
             .then(data => this.setState({annotations: JSON.parse(data.annotation)}))
     }
@@ -111,11 +111,11 @@ export class App extends React.Component {
             const data = new FormData();
             data.append('image', this.state.image);
 
-            axios.post('/image', data, {headers: { 'content-type': this.state.image.type }})
+            axios.post('/api/image', data, {headers: { 'content-type': this.state.image.type }})
                 .then(response => response.data)
                 .then(data => {
 
-                    axios.post('/annotation', {'image_id': data.image_id, 'filename': data.filename})
+                    axios.post('/api/annotation', {'image_id': data.image_id, 'filename': data.filename})
                         .then(response => response.data)
                         .then(data => {
                             this.setState({annotations: JSON.parse(data.annotation)})

@@ -7,18 +7,13 @@ from app.image import Annotation, Image, ImageAnnotator
 from app.storage import StorageClient
 
 
-@app.route('/')
-def index():
-    return app.send_static_file('index.html')
-
-
-@app.route('/login')
+@app.route('/api/login')
 @auth.login_required
 def login():
     return "logged in", 200
 
 
-@app.route('/images', methods=['GET'])
+@app.route('/api/images', methods=['GET'])
 @auth.login_required
 def all_images():
     raw_storage_client = StorageClient.build_raw_storage_client()
@@ -32,7 +27,7 @@ def all_images():
     return {'images': images}, 200
 
 
-@app.route('/annotation', methods=['GET'])
+@app.route('/api/annotation', methods=['GET'])
 @auth.login_required
 def get_annotation():
     image_id = request.args.get('image_id')
@@ -45,7 +40,7 @@ def get_annotation():
         return "Image ID is missing", 400
 
 
-@app.route('/annotation', methods=['POST'])
+@app.route('/api/annotation', methods=['POST'])
 def post_annotation():
     data = request.json
 
@@ -61,7 +56,7 @@ def post_annotation():
         return "Image ID is missing", 400
 
 
-@app.route('/image', methods=['DELETE'])
+@app.route('/api/image', methods=['DELETE'])
 @auth.login_required
 def delete_image():
     image_id = request.args.get('image_id')
@@ -74,7 +69,7 @@ def delete_image():
         return "Image ID is missing", 400
 
 
-@app.route('/image', methods=['GET'])
+@app.route('/api/image', methods=['GET'])
 @auth.login_required
 def get_image():
     image_id = request.args.get('image_id')
@@ -88,7 +83,7 @@ def get_image():
         return "Image ID or filename is missing", 400
 
 
-@app.route('/image', methods=['POST'])
+@app.route('/api/image', methods=['POST'])
 def post_image():
     image_file = request.files.get('image', None)
 

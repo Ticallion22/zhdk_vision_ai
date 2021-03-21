@@ -3,6 +3,7 @@ import './app.css';
 import {Cell, Grid, TabItem, TabPanel, Tabs, TabsContent} from 'react-foundation';
 import 'foundation-sites/dist/css/foundation.min.css';
 import Labels from "./annotations/label";
+import SafeSearches from "./annotations/safe_search";
 
 export default class Image extends React.Component {
     constructor(props) {
@@ -63,7 +64,7 @@ export default class Image extends React.Component {
 
                             </TabPanel>
                             <TabPanel isActive={this.state.activeIndex === 7} id={"image-tabs-safesearch"}>
-
+                                <SafeSearches annotations={this.props.annotations}/>
                             </TabPanel>
                         </TabsContent>
                     </div>

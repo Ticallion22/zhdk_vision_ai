@@ -9,6 +9,7 @@ def index():
     return app.send_static_file('index.html')
 
 
+# TODO get and delete route (protected)
 @app.route('/image', methods=['POST'])
 def route_image():
     if request.method == 'POST':

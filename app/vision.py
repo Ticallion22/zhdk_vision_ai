@@ -1,11 +1,9 @@
-from google.cloud.vision import AnnotateImageResponse, Feature, Image, ImageAnnotatorClient, Likelihood
+from google.cloud.vision import AnnotateImageResponse, Feature, Image, ImageAnnotatorClient
 
 # TODO exception handling
 
-LIKELIHOODS = Likelihood
 VISION_FEATURES = [
     {'type_': Feature.Type.FACE_DETECTION},
-    {'type_': Feature.Type.IMAGE_PROPERTIES},
     {'type_': Feature.Type.LABEL_DETECTION},
     {'type_': Feature.Type.LANDMARK_DETECTION},
     {'type_': Feature.Type.LOGO_DETECTION},

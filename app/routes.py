@@ -7,6 +7,11 @@ from app.image import Annotation, Image, ImageAnnotator
 from app.storage import StorageClient
 
 
+@app.route('/')
+def home():
+    return app.send_static_file('index.html')
+
+
 @app.route('/api/login')
 @auth.login_required
 def login():

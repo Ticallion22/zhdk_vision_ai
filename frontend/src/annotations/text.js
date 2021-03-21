@@ -15,14 +15,14 @@ export class Text extends React.Component {
                         <Callout key={"text-annotation-" + i}>{annotations[i].description}</Callout>
                     )
                 } else {
-                    return "Invalid texts annotation data found"
+                    return "Invalid annotation data found"
                 }
             }
 
             if (texts.length !== 0) {
                 return texts
             } else {
-                return "No texts annotation data found"
+                return "No annotation data found"
             }
         } else {
             return null

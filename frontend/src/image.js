@@ -6,6 +6,7 @@ import {Face} from "./annotations/face";
 import {Landmark} from "./annotations/landmark";
 import {Text} from "./annotations/text";
 import {PercentageAnnotation} from "./annotations/percentage";
+import {Web} from "./annotations/web";
 
 export class Image extends React.Component {
     constructor(props) {
@@ -16,6 +17,11 @@ export class Image extends React.Component {
 	}
 
     render() {
+        let webEntities = null
+        if (this.props.annotations.hasOwnProperty('webDetection')) {
+            webEntities = (<PercentageAnnotation annotations={this.props.annotations.webDetection} annotations_key={'webEntities'} name_key={'description'}/>)
+        }
+
         console.log(this.props.annotations) // TODO remove
         return (
             <Grid className="display">
@@ -26,53 +32,59 @@ export class Image extends React.Component {
                     <div>
                         <Tabs>
                             <TabItem isActive={this.state.activeIndex === 1} onClick={(e) => {this.setState({activeIndex: 1})}}>
-                                <a href={"#image-tabs-labels"}>Labels</a>
+                                <a href={"#labels"}>Labels</a>
                             </TabItem>
                             <TabItem isActive={this.state.activeIndex === 2} onClick={(e) => {this.setState({activeIndex: 2})}}>
-                                <a href={"#image-tabs-objects"}>Objects</a>
+                                <a href={"#objects"}>Objects</a>
                             </TabItem>
                             <TabItem isActive={this.state.activeIndex === 3} onClick={(e) => {this.setState({activeIndex: 3})}}>
-                                <a href={"#image-tabs-faces"}>Faces</a>
+                                <a href={"#faces"}>Faces</a>
                             </TabItem>
                             <TabItem isActive={this.state.activeIndex === 4} onClick={(e) => {this.setState({activeIndex: 4})}}>
-                                <a href={"#image-tabs-logos"}>Logos</a>
+                                <a href={"#logos"}>Logos</a>
                             </TabItem>
                             <TabItem isActive={this.state.activeIndex === 5} onClick={(e) => {this.setState({activeIndex: 5})}}>
-                                <a href={"#image-tabs-landmarks"}>Landmarks</a>
+                                <a href={"#landmarks"}>Landmarks</a>
                             </TabItem>
                             <TabItem isActive={this.state.activeIndex === 6} onClick={(e) => {this.setState({activeIndex: 6})}}>
-                                <a href={"#image-tabs-web"}>Web</a>
+                                <a href={"#web-entities"}>Web Entities</a>
                             </TabItem>
                             <TabItem isActive={this.state.activeIndex === 7} onClick={(e) => {this.setState({activeIndex: 7})}}>
-                                <a href={"#image-tabs-text"}>Text</a>
+                                <a href={"#matching-images"}>Matching Images</a>
                             </TabItem>
                             <TabItem isActive={this.state.activeIndex === 8} onClick={(e) => {this.setState({activeIndex: 8})}}>
-                                <a href={"#image-tabs-safesearch"}>Safe Search</a>
+                                <a href={"#text"}>Text</a>
+                            </TabItem>
+                            <TabItem isActive={this.state.activeIndex === 9} onClick={(e) => {this.setState({activeIndex: 9})}}>
+                                <a href={"#safe-search"}>Safe Search</a>
                             </TabItem>
                         </Tabs>
                         <TabsContent>
-                            <TabPanel isActive={this.state.activeIndex === 1} id={"image-tabs-labels"}>
+                            <TabPanel isActive={this.state.activeIndex === 1} id={"labels"}>
                                 <PercentageAnnotation annotations={this.props.annotations} annotations_key={'labelAnnotations'} name_key={'description'}/>
                             </TabPanel>
-                            <TabPanel isActive={this.state.activeIndex === 2} id={"image-tabs-objects"}>
+                            <TabPanel isActive={this.state.activeIndex === 2} id={"objects"}>
                                 <PercentageAnnotation annotations={this.props.annotations} annotations_key={'localizedObjectAnnotations'} name_key={'name'}/>
                             </TabPanel>
-                            <TabPanel isActive={this.state.activeIndex === 3} id={"image-tabs-faces"}>
+                            <TabPanel isActive={this.state.activeIndex === 3} id={"faces"}>
                                 <Face annotations={this.props.annotations}/>
                             </TabPanel>
-                            <TabPanel isActive={this.state.activeIndex === 4} id={"image-tabs-logos"}>
+                            <TabPanel isActive={this.state.activeIndex === 4} id={"logos"}>
                                 <PercentageAnnotation annotations={this.props.annotations} annotations_key={'logoAnnotations'} name_key={'description'}/>
                             </TabPanel>
-                            <TabPanel isActive={this.state.activeIndex === 5} id={"image-tabs-landmarks"}>
+                            <TabPanel isActive={this.state.activeIndex === 5} id={"landmarks"}>
                                 <Landmark annotations={this.props.annotations}/>
                             </TabPanel>
-                            <TabPanel isActive={this.state.activeIndex === 6} id={"image-tabs-web"}>
-
+                            <TabPanel isActive={this.state.activeIndex === 6} id={"web-entities"}>
+                                {webEntities}
                             </TabPanel>
-                            <TabPanel isActive={this.state.activeIndex === 7} id={"image-tabs-text"}>
+                            <TabPanel isActive={this.state.activeIndex === 7} id={"matching-images"}>
+                                <Web annotations={this.props.annotations}/>
+                            </TabPanel>
+                            <TabPanel isActive={this.state.activeIndex === 8} id={"text"}>
                                 <Text annotations={this.props.annotations}/>
                             </TabPanel>
-                            <TabPanel isActive={this.state.activeIndex === 8} id={"image-tabs-safesearch"}>
+                            <TabPanel isActive={this.state.activeIndex === 9} id={"safe-search"}>
                                 <SafeSearch annotations={this.props.annotations}/>
                             </TabPanel>
                         </TabsContent>

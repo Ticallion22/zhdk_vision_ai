@@ -5,6 +5,7 @@ import React from "react";
 export class PercentageAnnotation extends React.Component {
     getPercentages(annotations) {
         const percentages = []
+        let name
 
         for (let i in annotations) {
             if (
@@ -12,12 +13,15 @@ export class PercentageAnnotation extends React.Component {
                 && annotations[i].hasOwnProperty(this.props.name_key)
                 && annotations[i].hasOwnProperty("score")
             ) {
-                percentages.push(
-                    <Percentage key={"percentage-" + this.props.annotations_key + annotations[i][this.props.name_key]}
-                                description={annotations[i][this.props.name_key]}
-                                score={annotations[i].score}
-                    />
-                )
+                name = annotations[i][this.props.name_key]
+                if (name) {
+                    percentages.push(
+                        <Percentage key={"percentage-" + this.props.annotations_key + "-" + name}
+                                    description={name}
+                                    score={annotations[i].score}
+                        />
+                    )
+                }
             } else {
                 return ["Invalid annotation data found"]
             }

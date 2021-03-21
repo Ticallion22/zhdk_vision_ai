@@ -2,6 +2,7 @@ import React from "react";
 import {BadgeColors as Colors} from "react-foundation/lib/enums";
 import {Progress} from "react-foundation";
 import {getLikelihoodPercentage, likelihoodEnum} from "./likelihood";
+import {capitalizeFirstLetter} from "../utils";
 
 export default class SafeSearches extends React.Component {
     render() {
@@ -12,7 +13,7 @@ export default class SafeSearches extends React.Component {
             for (let key in this.props.annotations.safeSearchAnnotation) {
                 if (! key.endsWith('Confidence') && this.props.annotations.safeSearchAnnotation.hasOwnProperty(key)) {
                     likelihood = this.props.annotations.safeSearchAnnotation[key]
-                    annotations.push(<SafeSearch description={key} likelihood={likelihood}/>)
+                    annotations.push(<SafeSearch key={"safe-search-" + key} description={key} likelihood={likelihood}/>)
                 }
             }
 
@@ -27,7 +28,7 @@ class SafeSearch extends React.Component {
     render() {
         return (
             <div>
-                {this.props.description}: {likelihoodEnum[this.props.likelihood]}
+                {capitalizeFirstLetter(this.props.description)}: {likelihoodEnum[this.props.likelihood]}
                 <Progress color={Colors.SUCCESS} value={getLikelihoodPercentage(this.props.likelihood)}/>
             </div>
         )

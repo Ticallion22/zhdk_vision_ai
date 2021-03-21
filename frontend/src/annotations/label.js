@@ -9,14 +9,17 @@ export default class Labels extends React.Component {
             let label;
 
             for (let i in this.props.annotations.labelAnnotations) {
-                label = this.props.annotations.labelAnnotations[i]
+                if (this.props.annotations.labelAnnotations.hasOwnProperty(i)) {
+                    label = this.props.annotations.labelAnnotations[i]
 
-                if (label.hasOwnProperty('description') && label.hasOwnProperty('score')) {
-                    labels.push(<Label key={"label-annotation-" + label.description} description={label.description} score={label.score}/>)
+                    if (label.hasOwnProperty('description') && label.hasOwnProperty('score')) {
+                        labels.push(<Label key={"label-annotation-" + label.description} description={label.description}
+                                           score={label.score}/>)
 
-                } else {
-                    console.log(this.props.annotations.labelAnnotations)
-                    return "Invalid label annotation data found"
+                    } else {
+                        console.log(this.props.annotations.labelAnnotations)
+                        return "Invalid label annotation data found"
+                    }
                 }
             }
 

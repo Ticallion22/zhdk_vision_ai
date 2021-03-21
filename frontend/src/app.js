@@ -17,7 +17,8 @@ export class App extends React.Component {
             image_filename: '',
             image_preview: null,
             image_id: '',
-            display_admin: 'none'
+            display_admin: 'none',
+            current_page: -1
         }
 
         this.deleteImage = this.deleteImage.bind(this)
@@ -34,7 +35,6 @@ export class App extends React.Component {
         if (this.state.image_id) {
             axios.delete('/api/image', {params: {image_id: this.state.image_id}})
                 .then(response => {
-                    console.log(response)
                     this.getAllImages()
                 })
                 .catch(err => console.log(err))
@@ -44,9 +44,13 @@ export class App extends React.Component {
     getAllImages() {
         axios.get('/api/images')
             .then(response => response.data)
-            .then(data => {this.setState({
-                all_images: data.images
-            })})
+            .then(data => {
+                this.setState({all_images: data.images})
+                let selected
+                if (this.state.current_page >= 1) selected = this.state.current_page - 1
+                else selected = 0
+                this.onPageChange({selected: selected})
+            })
             .catch(err => alert(err.response.status + ': ' + err.response.data));
     }
 
@@ -57,7 +61,6 @@ export class App extends React.Component {
     login() {
         axios.get('/api/login')
             .then(response => {
-                console.log('user authenticated, displaying browsing stuff..')
                 this.setState({display_admin: 'block'})
                 this.getAllImages()
             })
@@ -65,14 +68,12 @@ export class App extends React.Component {
 
     onPageChange(data) {
         let selected = data.selected
+        let image = this.state.all_images[selected]
 
-        if (this.state.all_images.length !== 0) {
-            let image = this.state.all_images[selected]
-
-            const image_id = image.image_id
-            const image_filename = image.image_filename
-            this.setImageFromStorage(image_id, image_filename)
-        }
+        const image_id = image.image_id
+        const image_filename = image.image_filename
+        this.setImageFromStorage(image_id, image_filename)
+        this.setState({current_page: selected})
     }
 
     setImageFromStorage(image_id, image_filename) {
@@ -98,10 +99,12 @@ export class App extends React.Component {
     setImageFromUploaded(event) {
         if (event.target.files && event.target.files[0]) {
             this.setState({
+                annotations: {},
                 image: event.target.files[0],
                 image_filename: event.target.files[0].name,
                 image_preview: URL.createObjectURL(event.target.files[0]),
-                image_id: ''
+                image_id: '',
+                current_page: -1
             })
         }
     }
@@ -119,7 +122,6 @@ export class App extends React.Component {
                         .then(response => response.data)
                         .then(data => {
                             this.setState({annotations: JSON.parse(data.annotation)})
-                            this.getAllImages() // TODO improve
                         })
                         .catch(err => console.log(err));
 
@@ -145,14 +147,14 @@ export class App extends React.Component {
                             pageCount={this.state.all_images.length}
                             pageRangeDisplayed={5}
                             marginPagesDisplayed={2}
-                            breakClasName={'ellipsis'}
                             onPageChange={this.onPageChange}
-                            disableInitialCallback={false}
-                            containerClassName={'pagination'}
+                            forcePage={this.state.current_page}
+                            containerClassName={'pagination text-center'}
                             activeClassName={'current'}
                             previousClassName={'pagination-previous'}
                             nextClassName={'pagination-next'}
                             disabledClassName={'disabled'}
+                            breakClassName={'ellipsis'}
                         />
                     </div>
                 </Cell>

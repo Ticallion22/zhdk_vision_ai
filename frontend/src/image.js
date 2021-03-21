@@ -26,7 +26,14 @@ export class Image extends React.Component {
         return (
             <Grid className="display">
                 <Cell large={4}>
-                    <h3>{this.props.image_name}</h3><Button color={Colors.ALERT} onClick={this.props.deleteImage}>Delete</Button>
+                    <h3>{this.props.image_name}</h3>
+                    <Button
+                        color={Colors.ALERT}
+                        onClick={this.props.deleteImage}
+                        style={{display: this.props.display_admin}}
+                    >
+                        Delete
+                    </Button>
                     <img alt="Preview once uploaded" className="preview" src={this.props.preview} /><br/>
                 </Cell>
                 <Cell large={8}>

@@ -16,11 +16,14 @@ export class App extends React.Component {
             image: null,
             image_filename: '',
             image_preview: null,
-            image_id: ''
+            image_id: '',
+            display_admin: 'none'
         }
 
         this.deleteImage = this.deleteImage.bind(this)
         this.getAllImages = this.getAllImages.bind(this)
+        this.hide_admin = this.hide_admin.bind(this)
+        this.login = this.login.bind(this)
         this.onPageChange = this.onPageChange.bind(this)
         this.setImageFromStorage = this.setImageFromStorage.bind(this)
         this.setImageFromUploaded = this.setImageFromUploaded.bind(this)
@@ -49,6 +52,18 @@ export class App extends React.Component {
                 all_images: data.images
             })})
             .catch(err => alert(err.response.status + ': ' + err.response.data));
+    }
+
+    hide_admin() {
+        this.setState({display_admin: 'none'})
+    }
+
+    login() {
+        axios.get('/login')
+            .then(response => {
+                console.log('user authenticated, displaying browsing stuff..')
+                this.setState({display_admin: 'block'})
+            })
     }
 
     onPageChange(data) {
@@ -120,26 +135,37 @@ export class App extends React.Component {
         return (
             <Grid className="grid-container">
                 <Cell>
-                    <Image annotations={this.state.annotations} image_name={this.state.image_filename} preview={this.state.image_preview} deleteImage={this.deleteImage}/>
-                    <ReactPaginate
-                        pageCount={this.state.all_images.length}
-                        pageRangeDisplayed={5}
-                        marginPagesDisplayed={2}
-                        breakClasName={'ellipsis'}
-                        onPageChange={this.onPageChange}
-                        disableInitialCallback={false}
-                        containerClassName={'pagination'}
-                        activeClassName={'current'}
-                        previousClassName={'pagination-previous'}
-                        nextClassName={'pagination-next'}
-                        disabledClassName={'disabled'}
+                    <Image
+                        annotations={this.state.annotations}
+                        image_name={this.state.image_filename}
+                        preview={this.state.image_preview}
+                        deleteImage={this.deleteImage}
+                        display_admin={this.state.display_admin}
                     />
+
+                    <div style={{display: this.state.display_admin}}>
+                        <ReactPaginate
+                            pageCount={this.state.all_images.length}
+                            pageRangeDisplayed={5}
+                            marginPagesDisplayed={2}
+                            breakClasName={'ellipsis'}
+                            onPageChange={this.onPageChange}
+                            disableInitialCallback={false}
+                            containerClassName={'pagination'}
+                            activeClassName={'current'}
+                            previousClassName={'pagination-previous'}
+                            nextClassName={'pagination-next'}
+                            disabledClassName={'disabled'}
+                        />
+                    </div>
                 </Cell>
 
                 <Cell>
                     <h1>Choose an image</h1>
                     <input type='file' onChange={this.setImageFromUploaded} />
                     <Button color={Colors.PRIMARY} onClick={this.upload_image}>Upload</Button>
+                    <Button color={Colors.SUCCESS} onClick={this.login}>Browse</Button>
+                    <Button color={Colors.ALERT} onClick={this.hide_admin} style={{display: this.state.display_admin}}>Hide</Button>
                 </Cell>
             </Grid>
         )

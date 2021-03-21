@@ -4,7 +4,7 @@ import {Progress} from "react-foundation";
 import {getLikelihoodPercentage, likelihoodEnum} from "./likelihood";
 import {capitalizeFirstLetter} from "../utils";
 
-export default class SafeSearches extends React.Component {
+export class SafeSearches extends React.Component {
     render() {
         if (this.props.annotations.hasOwnProperty('safeSearchAnnotation')) {
             const annotations = []

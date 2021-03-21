@@ -11,6 +11,7 @@ GCP requires credentials. For now, we simply set the relevant environment variab
 - Install Python with denepdencies
 - Install npm with dependencies
 - Use Foundation
+- Draw on image
 
 https://digia.online/react-foundation-docs/
 

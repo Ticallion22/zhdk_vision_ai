@@ -2,10 +2,11 @@ import React from 'react';
 import './app.css';
 import {Cell, Grid, TabItem, TabPanel, Tabs, TabsContent} from 'react-foundation';
 import 'foundation-sites/dist/css/foundation.min.css';
-import Labels from "./annotations/label";
-import SafeSearches from "./annotations/safe_search";
+import {Labels} from "./annotations/label";
+import {SafeSearches} from "./annotations/safe_search";
+import {Objects} from "./annotations/object";
 
-export default class Image extends React.Component {
+export class Image extends React.Component {
     constructor(props) {
 		super(props);
 		this.state = {
@@ -49,7 +50,7 @@ export default class Image extends React.Component {
                                 <Labels annotations={this.props.annotations}/>
                             </TabPanel>
                             <TabPanel isActive={this.state.activeIndex === 2} id={"image-tabs-objects"}>
-
+                                <Objects annotations={this.props.annotations}/>
                             </TabPanel>
                             <TabPanel isActive={this.state.activeIndex === 3} id={"image-tabs-faces"}>
 

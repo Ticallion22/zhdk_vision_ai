@@ -1,11 +1,11 @@
 import axios from 'axios';
 import React from 'react';
-import Image from './image';
+import {Image} from './image';
 import './app.css';
 import {Cell, Grid} from "react-foundation";
 import 'foundation-sites/dist/css/foundation.min.css';
 
-export default class App extends React.Component {
+export class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {

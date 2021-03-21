@@ -15,12 +15,10 @@ export class Logo extends React.Component {
                     && annotations[i].hasOwnProperty("score")
                 ) {
                     logos.push(
-                        <div>
-                            <Percentage key={"logo-" + annotations[i].description}
-                                        description={annotations[i].description}
-                                        score={annotations[i].score}
-                            />
-                        </div>
+                        <Percentage key={"logo-" + annotations[i].description}
+                                    description={annotations[i].description}
+                                    score={annotations[i].score}
+                        />
                     )
                 } else {
                     return "Invalid logo annotation data found"

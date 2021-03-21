@@ -1,5 +1,4 @@
 import React from 'react';
-import './app.css';
 import {Cell, Grid, TabItem, TabPanel, Tabs, TabsContent} from 'react-foundation';
 import 'foundation-sites/dist/css/foundation.min.css';
 import {Label} from "./annotations/label";
@@ -8,6 +7,7 @@ import {LocalizedObject} from "./annotations/localized_object";
 import {Face} from "./annotations/face";
 import {Landmark} from "./annotations/landmark";
 import {Logo} from "./annotations/logo";
+import {Text} from "./annotations/text";
 
 export class Image extends React.Component {
     constructor(props) {
@@ -72,7 +72,7 @@ export class Image extends React.Component {
 
                             </TabPanel>
                             <TabPanel isActive={this.state.activeIndex === 7} id={"image-tabs-text"}>
-
+                                <Text annotations={this.props.annotations}/>
                             </TabPanel>
                             <TabPanel isActive={this.state.activeIndex === 8} id={"image-tabs-safesearch"}>
                                 <SafeSearch annotations={this.props.annotations}/>

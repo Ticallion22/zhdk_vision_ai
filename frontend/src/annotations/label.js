@@ -1,6 +1,8 @@
 import React from "react";
 import {Percentage} from "./percentage";
 
+// TODO merge label, object, logo
+
 export class Label extends React.Component {
     render() {
         if (this.props.annotations.hasOwnProperty('labelAnnotations')) {

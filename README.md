@@ -2,6 +2,7 @@
 
 ## Setup Local Environment
 
+this is a new line
 GCP requires credentials. For now, we simply set the relevant environment variable.
 
 - Create a JSON for the project owner service account and store it in the *credentials* directory.

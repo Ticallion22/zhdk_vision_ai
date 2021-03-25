@@ -161,7 +161,7 @@ export class App extends React.Component {
                 </Cell>
 
                 <Cell>
-                    <h1>Choose an image</h1>
+                    <h1 class="text">Choose an image</h1>
                     <input type='file' onChange={this.setImageFromUploaded} />
                     <Button color={Colors.PRIMARY} onClick={this.upload_image}>Upload</Button>
                     <Button color={Colors.SUCCESS} onClick={this.login}>Browse</Button>

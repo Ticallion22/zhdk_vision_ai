@@ -139,3 +139,8 @@ dmypy.json
 ### Static (don't check in, build frontend for deployment)
 
 static/*
+
+
+
+
+.DS_STORE

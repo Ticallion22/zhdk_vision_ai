@@ -2,10 +2,12 @@ import axios from 'axios';
 import React from 'react';
 import {Image} from './image';
 import './app.css';
-import {Button, Cell, Grid} from "react-foundation";
 import 'foundation-sites/dist/css/foundation.min.css';
 import ReactPaginate from 'react-paginate';
 import {BadgeColors as Colors} from "react-foundation/lib/enums";
+import searchIcon from './asset/search.png';
+import cameraIcon from './asset/camera.png';
+import menuIcon from './asset/menu.png';
 
 export class App extends React.Component {
     constructor(props) {
@@ -29,7 +31,10 @@ export class App extends React.Component {
         this.setImageFromStorage = this.setImageFromStorage.bind(this)
         this.setImageFromUploaded = this.setImageFromUploaded.bind(this)
         this.upload_image = this.upload_image.bind(this)
+
+        this.inputRef = React.createRef()
     }
+
     // TODO function for init state and always reset when necessary
     // TODO upload button disabled if no image selected
     // TODO images should have fixed order, after upload show the one uploaded, not just any
@@ -133,8 +138,53 @@ export class App extends React.Component {
 
     render() {
         return (
-            <Grid className="grid-container">
-                <Cell>
+           <div>
+                   <div className="nav">
+                     <div className="icon square">
+                       <a href="#"><img alt="contact us" src={menuIcon}/></a>
+                     </div>
+                     <div className="icon round">
+                       <a className="z-icon" href="#">Z</a>
+                     </div>
+                   </div>
+
+
+                   <div className="grid-top">
+                     <div className="logo">
+                       <span className="text blue">W</span>
+                       <span className="text red">h</span>
+                       <span className="text yellow">o</span>
+                       &ensp;
+                       <span className="text blue">A</span>
+                       <span className="text green">r</span>
+                       <span className="text red">e</span>
+                       &ensp;
+                       <span className="text yellow">Y</span>
+                       <span className="text green">o</span>
+                       <span className="text red">u</span>
+                       <span className="text blue">?</span>
+
+                     </div>
+                     <div className="rectangle">
+                       <img className="file search" src={searchIcon} />
+                       <div className="file choose">
+                         <a onClick={() => this.inputRef.current?.click()}>
+                           <div class="portrait">Upload your portrait here</div>
+                         </a>
+                         <input className="file-btn" type='file' onChange={this.setImageFromUploaded} ref={this.inputRef} style={{display: 'none'}}/>
+                       </div>
+                       <div clasNames="file text">
+                       </div>
+                       <a className="file-upload" onClick={this.upload_image}>
+                        <img className="file camera" src={cameraIcon} />
+                       </a>
+
+                    </div>
+                  </div>
+
+
+                  <div className="grid-bottom">
+
                     <Image
                         annotations={this.state.annotations}
                         image_name={this.state.image_filename}
@@ -157,17 +207,17 @@ export class App extends React.Component {
                             disabledClassName={'disabled'}
                             breakClassName={'ellipsis'}
                         />
-                    </div>
-                </Cell>
+                      </div>
+                 </div>
 
-                <Cell>
-                    <h1 class="text">Choose an image</h1>
-                    <input type='file' onChange={this.setImageFromUploaded} />
-                    <Button color={Colors.PRIMARY} onClick={this.upload_image}>Upload</Button>
-                    <Button color={Colors.SUCCESS} onClick={this.login}>Browse</Button>
-                    <Button color={Colors.ALERT} onClick={this.hide_admin} style={{display: this.state.display_admin}}>Hide</Button>
-                </Cell>
-            </Grid>
+                  <div className="footer">
+                    <a className="foots about">About Us</a>
+                    <a className="foots contact">Contact</a>
+                    <a className="foots zhdk" src="https://www.zhdk.ch/">Zhdk</a>
+                    <a className="foots browse" onClick={this.login}>Browse</a>
+                    <a className="foots hide" onClick={this.hide_admin} style={{display: this.state.display_admin}}>Hide</a>
+                  </div>
+            </div>
         )
     }
 }

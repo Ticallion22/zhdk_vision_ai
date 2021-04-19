@@ -4,7 +4,6 @@ import {Image} from './image';
 import './app.css';
 import 'foundation-sites/dist/css/foundation.min.css';
 import ReactPaginate from 'react-paginate';
-import {BadgeColors as Colors} from "react-foundation/lib/enums";
 import searchIcon from './asset/search.png';
 import cameraIcon from './asset/camera.png';
 import menuIcon from './asset/menu.png';
@@ -144,7 +143,7 @@ export class App extends React.Component {
                        <a href="#"><img alt="contact us" src={menuIcon}/></a>
                      </div>
                      <div className="icon round">
-                       <a className="z-icon" href="#">Z</a>
+                       <a className="z-icon" href="https://www.zhdk.ch/">Z</a>
                      </div>
                    </div>
 

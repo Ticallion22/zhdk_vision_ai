@@ -168,11 +168,11 @@ h3 {
 }
 
 .elements {
-  position: relative;
+  position: fixed;
   display: inline-block;
   padding-left: 20px;
   width: 55%;
-  left: 20%;
+  left: 40%;
   vertical-align: top;
 }
 
@@ -251,6 +251,9 @@ h3 {
 }
 
 @media only screen and (max-width: 414px){
+  #root{
+    margin:0;
+  }
   .square {
     right: 9%;
   }
@@ -289,6 +292,7 @@ h3 {
     margin-bottom: 20px;
   }
   .elements {
+    position: relative;
     padding-left: 0;
     left: 0;
     align-self: center;

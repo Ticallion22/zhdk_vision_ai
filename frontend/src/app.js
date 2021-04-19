@@ -210,7 +210,9 @@ export class App extends React.Component {
                  </div>
 
                   <div className="footer">
-                    <a className="foots about">About Us</a>
+                    <div className="foots about">About Us
+                    <span class="tooltip">We are students from Zhdk.And We are </span>
+                    </div>
                     <a className="foots contact">Contact</a>
                     <a className="foots zhdk" src="https://www.zhdk.ch/">Zhdk</a>
                     <a className="foots browse" onClick={this.login}>Browse</a>

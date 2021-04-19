@@ -235,7 +235,6 @@ h3 {
 }
 .contact{
   position: relative;
-
   text-align: left;
 }
 .zhdk {
@@ -248,6 +247,26 @@ h3 {
   top: 2px;
   right: 1rem;
   text-align: right;
+}
+
+.tooltip{
+  visibility: hidden;
+  width: 200px;
+  background-color: rgba(145, 145, 145, 0.575);
+  color: rgb(0, 0, 0);
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  font-size: 0.8rem;
+  
+  position: fixed;
+  z-index: 2;
+  top: 85%;
+  left: 4%;
+}
+
+.about:hover .tooltip {
+  visibility: visible;
 }
 
 @media only screen and (max-width: 414px){

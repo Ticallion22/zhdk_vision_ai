@@ -132,7 +132,7 @@ export class App extends React.Component {
 
                 })
                 .catch(err => console.log(err));
-        }
+            }
     }
 
     render() {
@@ -207,14 +207,31 @@ export class App extends React.Component {
                             breakClassName={'ellipsis'}
                         />
                       </div>
-                 </div>
+                 </div> 
 
                   <div className="footer">
-                    <div className="foots about">About Us
-                    <span class="tooltip">We are students from Zhdk.And We are </span>
+                    <div className="foots about">PROJECT
+                      <span className="tooltip hello">
+                       <p><strong>Hello,</strong></p>
+                       <p>We are Spectacle Spectre and we want to help you help yourselves. </p>
+                       <p>Upload an image of yourself, your pet, your avatar, anything that describes you. Our API will then tell you what it can gather about you, whether you know it or not. </p>
+                       <p>This is the first stage of an on-going artistic research project. All participation is welcomed.</p>
+                      </span>
                     </div>
-                    <a className="foots contact">Contact</a>
-                    <a className="foots zhdk" src="https://www.zhdk.ch/">Zhdk</a>
+                    <div className="foots us">ABOUT
+                      <span className="tooltip spec">
+                       <p><strong>Spectacle Spectre</strong></p>
+                       <p>Yumna Al-Arashi, Sara Rutz, Daeun Park, TaeHwan Jeon, Rodrigo Toro Madrid, and Vincent Graf</p>
+                      </span>
+                    </div>
+                    <div className="foots legal"> LEGAL / DISCLAIMER
+                      <span className="tooltip as">
+                      <p><strong>Legal / Disclaimer</strong></p>
+                      <p>As this is part of an artistic research project, we do not plan to do anything commercial with the imagery you share with us. 
+                        You must own the copyright to any imagery you upload. There is also a possibility that any imagery you use will be reproduced in an artistic research and experiment in the future, 
+                        but, you will always retain your copyright. The data we keep from this research will be held for one year only and discarded responsibly thereafter.</p>
+                      </span>
+                    </div>
                     <a className="foots browse" onClick={this.login}>Browse</a>
                     <a className="foots hide" onClick={this.hide_admin} style={{display: this.state.display_admin}}>Hide</a>
                   </div>

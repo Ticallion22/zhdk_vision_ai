@@ -233,40 +233,59 @@ h3 {
   left: 0;
   text-align: left;
 }
-.contact{
+.us{
   position: relative;
   text-align: left;
 }
-.zhdk {
+.legal {
   position: relative;
+  text-align: left;
+}
 
-  text-align: left;
+.tooltip{
+  visibility: hidden;
+  min-width: 300px;
+  background-color: rgba(184, 183, 183, 0.9);
+  color: rgb(0, 0, 0);
+  text-align: center;
+  border-radius: 6px;
+  padding: 20px 10px 10px 10px;
+  font-size: 1rem;
 }
+.hello {
+ position: fixed;
+ z-index: 1;
+top: 55%; 
+ left: 4%;
+}
+.spec {
+  position: fixed;
+  z-index: 1;
+  top: 76%;
+  left: 13%;
+}
+.as {
+  position: fixed;
+  z-index: 1;
+  top: 53%;
+  left: 20%;
+}
+
+.about:hover .tooltip {
+  visibility: visible;
+}
+.us:hover .tooltip {
+  visibility: visible;
+}
+.legal:hover .tooltip {
+  visibility: visible;
+}
+
 .browse {
   position: absolute;
   top: 2px;
   right: 1rem;
   text-align: right;
-}
-
-.tooltip{
-  visibility: hidden;
-  width: 200px;
-  background-color: rgba(145, 145, 145, 0.575);
-  color: rgb(0, 0, 0);
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
-  font-size: 0.8rem;
-  
-  position: fixed;
-  z-index: 2;
-  top: 85%;
-  left: 4%;
-}
-
-.about:hover .tooltip {
-  visibility: visible;
 }
 
 @media only screen and (max-width: 414px){
@@ -327,6 +346,27 @@ h3 {
   }
   .browse {
     top: 4px;
+  }
+  .tooltip{
+    min-width: 250px;
+  }
+  .hello {
+   position: fixed;
+   z-index: 1;
+   top: 45%; 
+   left: 20%;
+  }
+  .spec {
+    position: fixed;
+    z-index: 1;
+    top: 73%;
+    left: 20%;
+  }
+  .as {
+    position: fixed;
+    z-index: 1;
+    top: 35%;
+    left: 20%;
   }
 }
 @media only screen and (max-width: 375px){

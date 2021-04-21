@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Cell, Grid, TabItem, TabPanel, Tabs, TabsContent} from 'react-foundation';
+import {Button, TabItem, TabPanel, Tabs, TabsContent} from 'react-foundation';
 import 'foundation-sites/dist/css/foundation.min.css';
 import {SafeSearch} from "./annotations/safe_search";
 import {Face} from "./annotations/face";
@@ -24,9 +24,9 @@ export class Image extends React.Component {
         }
 
         return (
-            <Grid className="display">
-                <Cell large={4}>
-                    <h3>{this.props.image_name}</h3>
+              <div className="grid-after">
+                <div className="img-area">
+                    <h3 >{this.props.image_name}</h3>
                     <Button
                         color={Colors.ALERT}
                         onClick={this.props.deleteImage}
@@ -34,11 +34,15 @@ export class Image extends React.Component {
                     >
                         Delete
                     </Button>
-                    <img alt="Preview once uploaded" className="preview" src={this.props.preview} /><br/>
-                </Cell>
-                <Cell large={8}>
+                    <img alt="Your uploaded Image" className="img-preview" src={this.props.preview} /><br/>
+                </div>
+
+                <div className="elements">
                     <div>
                         <Tabs>
+                          <TabItem isActive={this.state.activeIndex === 6} onClick={(e) => {this.setState({activeIndex: 6})}}>
+                              <a href={"#web-entities"}><strong>Web Entities</strong></a>
+                          </TabItem>
                             <TabItem isActive={this.state.activeIndex === 1} onClick={(e) => {this.setState({activeIndex: 1})}}>
                                 <a href={"#labels"}>Labels</a>
                             </TabItem>
@@ -54,9 +58,7 @@ export class Image extends React.Component {
                             <TabItem isActive={this.state.activeIndex === 5} onClick={(e) => {this.setState({activeIndex: 5})}}>
                                 <a href={"#landmarks"}>Landmarks</a>
                             </TabItem>
-                            <TabItem isActive={this.state.activeIndex === 6} onClick={(e) => {this.setState({activeIndex: 6})}}>
-                                <a href={"#web-entities"}>Web Entities</a>
-                            </TabItem>
+
                             <TabItem isActive={this.state.activeIndex === 7} onClick={(e) => {this.setState({activeIndex: 7})}}>
                                 <a href={"#matching-images"}>Matching Images</a>
                             </TabItem>
@@ -97,8 +99,8 @@ export class Image extends React.Component {
                             </TabPanel>
                         </TabsContent>
                     </div>
-                </Cell>
-            </Grid>
+                </div>
+              </div>
 
         )
     }

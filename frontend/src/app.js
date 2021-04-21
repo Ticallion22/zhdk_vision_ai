@@ -2,10 +2,11 @@ import axios from 'axios';
 import React from 'react';
 import {Image} from './image';
 import './app.css';
-import {Button, Cell, Grid} from "react-foundation";
 import 'foundation-sites/dist/css/foundation.min.css';
 import ReactPaginate from 'react-paginate';
-import {BadgeColors as Colors} from "react-foundation/lib/enums";
+import searchIcon from './asset/search.png';
+import cameraIcon from './asset/camera.png';
+import menuIcon from './asset/menu.png';
 
 export class App extends React.Component {
     constructor(props) {
@@ -29,7 +30,10 @@ export class App extends React.Component {
         this.setImageFromStorage = this.setImageFromStorage.bind(this)
         this.setImageFromUploaded = this.setImageFromUploaded.bind(this)
         this.upload_image = this.upload_image.bind(this)
+
+        this.inputRef = React.createRef()
     }
+
     // TODO function for init state and always reset when necessary
     // TODO upload button disabled if no image selected
     // TODO images should have fixed order, after upload show the one uploaded, not just any
@@ -128,13 +132,58 @@ export class App extends React.Component {
 
                 })
                 .catch(err => console.log(err));
-        }
+            }
     }
 
     render() {
         return (
-            <Grid className="grid-container">
-                <Cell>
+           <div>
+                   <div className="nav">
+                     <div className="icon square">
+                       <a href="#"><img alt="contact us" src={menuIcon}/></a>
+                     </div>
+                     <div className="icon round">
+                       <a className="z-icon" href="https://www.zhdk.ch/">Z</a>
+                     </div>
+                   </div>
+
+
+                   <div className="grid-top">
+                     <div className="logo">
+                       <span className="text blue">W</span>
+                       <span className="text red">h</span>
+                       <span className="text yellow">o</span>
+                       &ensp;
+                       <span className="text blue">A</span>
+                       <span className="text green">r</span>
+                       <span className="text red">e</span>
+                       &ensp;
+                       <span className="text yellow">Y</span>
+                       <span className="text green">o</span>
+                       <span className="text red">u</span>
+                       <span className="text blue">?</span>
+
+                     </div>
+                     <div className="rectangle">
+                       <img className="file search" src={searchIcon} />
+                       <div className="file choose">
+                         <a onClick={() => this.inputRef.current?.click()}>
+                           <div class="portrait">Upload your portrait here</div>
+                         </a>
+                         <input className="file-btn" type='file' onChange={this.setImageFromUploaded} ref={this.inputRef} style={{display: 'none'}}/>
+                       </div>
+                       <div clasNames="file text">
+                       </div>
+                       <a className="file-upload" onClick={this.upload_image}>
+                        <img className="file camera" src={cameraIcon} />
+                       </a>
+
+                    </div>
+                  </div>
+
+
+                  <div className="grid-bottom">
+
                     <Image
                         annotations={this.state.annotations}
                         image_name={this.state.image_filename}
@@ -157,17 +206,36 @@ export class App extends React.Component {
                             disabledClassName={'disabled'}
                             breakClassName={'ellipsis'}
                         />
-                    </div>
-                </Cell>
+                      </div>
+                 </div> 
 
-                <Cell>
-                    <h1>Choose an image</h1>
-                    <input type='file' onChange={this.setImageFromUploaded} />
-                    <Button color={Colors.PRIMARY} onClick={this.upload_image}>Upload</Button>
-                    <Button color={Colors.SUCCESS} onClick={this.login}>Browse</Button>
-                    <Button color={Colors.ALERT} onClick={this.hide_admin} style={{display: this.state.display_admin}}>Hide</Button>
-                </Cell>
-            </Grid>
+                  <div className="footer">
+                    <div className="foots about">PROJECT
+                      <span className="tooltip hello">
+                       <p><strong>Hello,</strong></p>
+                       <p>We are Spectacle Spectre and we want to help you help yourselves. </p>
+                       <p>Upload an image of yourself, your pet, your avatar, anything that describes you. Our API will then tell you what it can gather about you, whether you know it or not. </p>
+                       <p>This is the first stage of an on-going artistic research project. All participation is welcomed.</p>
+                      </span>
+                    </div>
+                    <div className="foots us">ABOUT
+                      <span className="tooltip spec">
+                       <p><strong>Spectacle Spectre</strong></p>
+                       <p>Yumna Al-Arashi, Sara Rutz, Daeun Park, TaeHwan Jeon, Rodrigo Toro Madrid, and Vincent Graf</p>
+                      </span>
+                    </div>
+                    <div className="foots legal"> LEGAL / DISCLAIMER
+                      <span className="tooltip as">
+                      <p><strong>Legal / Disclaimer</strong></p>
+                      <p>As this is part of an artistic research project, we do not plan to do anything commercial with the imagery you share with us. 
+                        You must own the copyright to any imagery you upload. There is also a possibility that any imagery you use will be reproduced in an artistic research and experiment in the future, 
+                        but, you will always retain your copyright. The data we keep from this research will be held for one year only and discarded responsibly thereafter.</p>
+                      </span>
+                    </div>
+                    <a className="foots browse" onClick={this.login}>Browse</a>
+                    <a className="foots hide" onClick={this.hide_admin} style={{display: this.state.display_admin}}>Hide</a>
+                  </div>
+            </div>
         )
     }
 }

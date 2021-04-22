@@ -192,7 +192,7 @@ export class App extends React.Component {
                         display_admin={this.state.display_admin}
                     />
 
-                    <div style={{display: this.state.display_admin}}>
+                    <div className="pagination" style={{display: this.state.display_admin}}>
                         <ReactPaginate
                             pageCount={this.state.all_images.length}
                             pageRangeDisplayed={5}

@@ -7,6 +7,7 @@
   max-height: 870px;
 }
 
+
 a:hover,
 a:active {
   color: #037BFB;
@@ -140,6 +141,28 @@ a:active {
   left: 93%;
   opacity: 0.5;
 }
+.camera-text {
+  visibility: hidden;
+  width: 220px;
+  min-width: 220px;
+  background-color: #037bfbcc;
+  color: rgb(255, 255, 255);
+  text-align: center;
+  border-radius: 6px;
+  padding: 2px;
+  margin: 0;
+  font-size: 0.9rem;
+}
+.bottom{
+  position: absolute;
+  z-index: 1;
+  top: 39%; 
+  right: 5%;
+}
+.rectangle:hover .camera-text {
+  visibility: visible;
+}
+
 
 .grid-bottom {
   position: relative;
@@ -211,9 +234,9 @@ h3 {
 
 .pagination {
   position: fixed;
-  position: fixed;
-  bottom: 50px;
+  bottom: 30px;
   left: 30%;
+  z-index: 2;
 }
 
 .footer {
@@ -260,7 +283,7 @@ h3 {
 .hello {
  position: fixed;
  z-index: 1;
-top: 55%; 
+ top: 55%; 
  left: 4%;
 }
 .spec {
@@ -294,12 +317,12 @@ top: 55%;
 }
 
 @media only screen and (max-width: 414px){
+  body { 
+    height:1200px;
+    width: auto;
+  }
   #root{
     margin:0;
-  }
-  body { 
-    height:1000px;
-    width: auto;
   }
   .square {
     right: 9%;
@@ -323,6 +346,15 @@ top: 55%;
   .camera {
     left: 89%;
   }
+  .camera-text {
+    width: 170px;
+    min-width: 170px;
+    font-size: 0.8rem; 
+  }
+  .bottom{
+    top: 110%; 
+    right: 5%;
+  }
   .grid-after {
     display: flex;
     flex-direction: column;
@@ -344,12 +376,14 @@ top: 55%;
     left: 0;
     align-self: center;
     width: 75%;
+    margin-bottom: 70px;
   }
   .tabs-panel {
     height: 400px;
     max-height: 400px;
   }
   .footer{
+    margin-top: 50px;
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;
@@ -440,6 +474,9 @@ top: 55%;
      z-index: 1;
      top: 65%;
      left: 12%;
+   }
+   .img-preview {
+     margin-left: 8%;
    }
    .as {
      position: fixed;

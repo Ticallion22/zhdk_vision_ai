@@ -176,8 +176,8 @@ export class App extends React.Component {
                        </div>
                        <a className="file-upload" onClick={this.upload_image}>
                         <img className="file camera" src={cameraIcon} />
-                       </a>
-
+                       </a>                    
+                       <div className="camera-text bottom"><span>After choosing an IMAGE, Please click the CAMERA button</span></div>
                     </div>
                   </div>
 

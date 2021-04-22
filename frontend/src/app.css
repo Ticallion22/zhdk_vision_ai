@@ -211,8 +211,9 @@ h3 {
 
 .pagination {
   position: fixed;
-  margin: 0 auto;
-  bottom: 70px;
+  position: fixed;
+  bottom: 50px;
+  left: 30%;
 }
 
 .footer {

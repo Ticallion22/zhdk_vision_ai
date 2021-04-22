@@ -193,8 +193,8 @@ h3 {
 }
 
 .tabs-panel {
-  height: 500px;
-  max-height: 500px;
+  height: 350px;
+  max-height: 350px;
   overflow-y: scroll;
 }
 
@@ -208,7 +208,6 @@ h3 {
 .progress.success .progress-meter {
   background-color: #037BFB;
 }
-
 
 
 .footer {
@@ -245,7 +244,7 @@ h3 {
 .tooltip{
   visibility: hidden;
   min-width: 300px;
-  background-color: rgba(184, 183, 183, 0.9);
+  background-color: rgba(221, 219, 219, 0.9);
   color: rgb(0, 0, 0);
   text-align: center;
   border-radius: 6px;
@@ -292,6 +291,10 @@ top: 55%;
   #root{
     margin:0;
   }
+  body { 
+    height:850px;
+    width: auto;
+  }
   .square {
     right: 9%;
   }
@@ -321,13 +324,13 @@ top: 55%;
     align-items: center;
   }
   .img-area {
+    max-width: 260px;
     align-self: center;
   }
   .img-preview {
-    width: 40%;
-    max-width: 40%;
-    margin-left: 20%;
-    margin-bottom: 20px;
+    width: 60%;
+    max-width: 60%;
+    margin-bottom: 40px;
   }
   .elements {
     position: relative;
@@ -335,6 +338,10 @@ top: 55%;
     left: 0;
     align-self: center;
     width: 75%;
+  }
+  .tabs-panel {
+    height: 400px;
+    max-height: 400px;
   }
   .footer{
     display: flex;
@@ -385,4 +392,53 @@ top: 55%;
     left: 85%;
     top: -20px;
   }
+  .footer{
+    align-items: flex-start;
+  }
+  .foots{
+   padding-left: 12px;
+   padding-top: 5px;
+   font-size: 0.8rem;
+    }
+  .browse {
+   top: -1px;
+   }
+  .hello {
+   position: fixed;
+   z-index: 1;
+   top: 38%; 
+   left: 16%;
+  }
+  .spec {
+    position: fixed;
+    z-index: 1;
+    top: 69%;
+    left: 16%;
+  }
+  .as {
+    position: fixed;
+    z-index: 1;
+    top: 28%;
+    left: 16%;
+  }
+}
+@media only screen and (max-width: 320px){
+  .hello {
+    position: fixed;
+    z-index: 1;
+    top: 29%; 
+    left: 12%;
+   }
+   .spec {
+     position: fixed;
+     z-index: 1;
+     top: 65%;
+     left: 12%;
+   }
+   .as {
+     position: fixed;
+     z-index: 1;
+     top: 17%;
+     left: 12%;
+   }
 }

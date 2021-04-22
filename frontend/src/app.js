@@ -172,7 +172,7 @@ export class App extends React.Component {
                          </a>
                          <input className="file-btn" type='file' onChange={this.setImageFromUploaded} ref={this.inputRef} style={{display: 'none'}}/>
                        </div>
-                       <div clasNames="file text">
+                       <div clasNames="file result">
                        </div>
                        <a className="file-upload" onClick={this.upload_image}>
                         <img className="file camera" src={cameraIcon} />

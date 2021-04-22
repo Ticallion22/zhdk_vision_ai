@@ -34,7 +34,7 @@ export class Image extends React.Component {
                     >
                         Delete
                     </Button>
-                    <img alt="After choosing an IMAGE,&ensp; Please click the CAMERA button" className="img-preview" src={this.props.preview} /><br/>
+                    <img alt="After choosing an IMAGE,&ensp; Please click the CAMERA button ONCE" className="img-preview" src={this.props.preview} /><br/>
                 </div>
 
                 <div className="elements">
